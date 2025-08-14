@@ -6,7 +6,7 @@ Esse projeto foi gerando usando [Angular CLI](https://github.com/angular/angular
 Para executar a aplicação localmente, siga os passos abaixo
 1. Clone o projeto
 ```bash
-git clone [https://github.com/DouglasKenjiSakakibara01/smartfit-frontend-challenge.git](https://github.com/DouglasKenjiSakakibara01/notetaking-app.git)
+git clone [https://github.com/DouglasKenjiSakakibara01/notetaking-app.git]
 cd notetaking-app
 ````
 2. Instale as dependências
