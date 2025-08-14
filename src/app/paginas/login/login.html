@@ -1,0 +1,16 @@
+<div class="conteiner-login">
+    <form (ngSubmit)="Login()">
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input type="email" matInput placeholder="Ex: exemplo@exemplo.com" [formControl]="email">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Senha</mat-label>
+            <input type="password" matInput [formControl]="senha">
+        </mat-form-field>
+        <div class="conteiner-button">
+            <button type="submit" [disabled]="senha.valid && email.valid" >Login</button>
+        </div>
+    </form>
+    <p>Ainda não tem uma conta? <a href="/register">Cadastre aqui</a>.</p>
+</div>
