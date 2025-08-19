@@ -1,0 +1,66 @@
+<div class="conteiner-cadastro">
+    <form (ngSubmit)="Cadastrar()" [formGroup]="formCadastro">
+         <mat-form-field>
+            <mat-label>Nome</mat-label>
+            <input type="email" matInput formControlName="nome">
+            @if(formCadastro.controls.nome.hasError('required')) {
+                <mat-error>Email obrigatório</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>CPF</mat-label>
+            <input type="text" matInput formControlName="cpf">
+            @if(formCadastro.controls.cpf.hasError('pattern') && !formCadastro.controls.cpf.hasError('required')) {
+                <mat-error>Digite um CPF válido</mat-error>
+            }
+            @if(formCadastro.controls.cpf.hasError('required')) {
+                <mat-error>CPF obrigatório</mat-error>
+            }            
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Data de nascimento</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="dataNascimento">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            @if(formCadastro.controls.dataNascimento.hasError('pattern') && !formCadastro.controls.dataNascimento.hasError('required')) {
+                <mat-error>Data de nascimento inválida</mat-error>
+            }
+            @if(formCadastro.controls.dataNascimento.hasError('required')) {
+                <mat-error>Data de nascimento obrigatória</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Telefone</mat-label>
+            <input type="text" matInput formControlName="telefone">
+            @if(formCadastro.controls.telefone.hasError('pattern') && !formCadastro.controls.telefone.hasError('required')) {
+                <mat-error>Digite um telefone válido</mat-error>
+            }
+            @if(formCadastro.controls.email.hasError('required')) {
+                <mat-error>Telefone obrigatório</mat-error>
+            }            
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input type="email" matInput placeholder="Ex: exemplo@exemplo.com" formControlName="email">
+            @if(formCadastro.controls.email.hasError('email') && !formCadastro.controls.email.hasError('required')) {
+                <mat-error>Digite um email válido</mat-error>
+            }
+            @if(formCadastro.controls.email.hasError('required')) {
+                <mat-error>Email obrigatório</mat-error>
+            }            
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Senha</mat-label>
+            <input type="password" matInput formControlName="senha">   
+            @if(formCadastro.controls.senha.hasError('minLength') && !formCadastro.controls.senha.hasError('required')) {
+                <mat-error>Digite uma senha com no mínimo 8 caracteres</mat-error>
+            }
+            @if(formCadastro.controls.senha.hasError('required')) {
+                <mat-error>Senha é obrigatório</mat-error>
+            }
+        </mat-form-field>
+        <div class="conteiner-button">
+            <button type="submit" [disabled]="!formCadastro.valid">Cadastrar</button>
+        </div>
+    </form>
+</div>

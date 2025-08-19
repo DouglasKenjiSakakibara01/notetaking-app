@@ -5,5 +5,13 @@ export const routes: Routes = [
     {
         path: '',
         component: Login
+    },
+    {
+        path: 'login',
+        component: Login
+    },
+    {
+        path: 'cadastro-conta',
+        loadComponent: () => import('./paginas/cadastro-conta/cadastro-conta').then(m => m.CadastroConta)
     }
 ];
