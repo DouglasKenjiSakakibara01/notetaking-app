@@ -3,10 +3,23 @@
         <mat-form-field>
             <mat-label>Email</mat-label>
             <input type="email" matInput placeholder="Ex: exemplo@exemplo.com" [formControl]="email">
+            @if(email.hasError('email') && !email.hasError('required')) {
+                <mat-error>Digite um email válido</mat-error>
+            }
+            @if(email.hasError('required')) {
+                <mat-error>Email obrigatório</mat-error>
+            }
+            
         </mat-form-field>
         <mat-form-field>
             <mat-label>Senha</mat-label>
-            <input type="password" matInput [formControl]="senha">
+            <input type="password" matInput [formControl]="senha">   
+            @if(senha.hasError('minLength') && !senha.hasError('required')) {
+                <mat-error>Digite uma senha com no mínimo 8 caracteres</mat-error>
+            }
+            @if(senha.hasError('required')) {
+                <mat-error>Senha é obrigatório</mat-error>
+            }
         </mat-form-field>
         <div class="conteiner-button">
             <button type="submit" [disabled]="senha.valid && email.valid" >Login</button>
