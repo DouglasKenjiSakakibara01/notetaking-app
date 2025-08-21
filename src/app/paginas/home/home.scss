@@ -1,0 +1,41 @@
+.content {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    .menu-lateral {
+        width: 10%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        background-color: #5adbb0;
+        .opcao-menu {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            padding: 8px 0;
+        }
+        .opcao-menu:hover {
+            cursor: pointer;
+            background-color: #3ecfa1;
+        }
+    }
+
+    .conteudo-principal {
+        width: 90%;
+        .titulo {
+            padding-left: .5rem;
+        }
+        .conteiner-banner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            img {
+                border-radius: 16px;
+            }
+        }
+    }
+}

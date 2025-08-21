@@ -5,6 +5,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -15,6 +16,8 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
   styleUrl: './cadastro-conta.scss'
 })
 export class CadastroConta {
+  constructor(private router: Router) {}
+
   formCadastro = new FormGroup({
     nome: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -26,5 +29,6 @@ export class CadastroConta {
 
   Cadastrar() {
     console.log('cadastro efetuado com sucesso', this.formCadastro);
+    this.router.navigate(['/home']);
   }
 }

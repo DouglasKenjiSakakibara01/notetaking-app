@@ -13,5 +13,9 @@ export const routes: Routes = [
     {
         path: 'cadastro-conta',
         loadComponent: () => import('./paginas/cadastro-conta/cadastro-conta').then(m => m.CadastroConta)
+    },
+    {
+        path: 'home',
+        loadComponent: () => import('./paginas/home/home').then(m => m.Home)
     }
 ];
