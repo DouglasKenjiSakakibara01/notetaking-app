@@ -1,0 +1,55 @@
+<div class="content">
+    @if(!formEvento) {
+        <div class="container-button-cadastro">
+            <button (click)="AbrirModalFormulario()">Cadastrar</button>
+        </div>
+        <div class="container-lista">
+            <div class="header-lista">
+                <div class="titulo">Título</div>
+                <div class="data">Data</div>
+            </div>
+            <div class="lista">
+                @for(item of listaEvento; track item.Id) {
+                    <div class="item">
+                        <div class="titulo">
+                            {{item.Titulo}}
+                        </div>
+                        <div class="data">
+                            {{item.DtEvento}}
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+    @if(formEvento) {
+        <div class="conteiner-cadastro">
+            <form (ngSubmit)="Cadastrar()" [formGroup]="formCadastro">
+                <mat-form-field>
+                    <mat-label>Título</mat-label>
+                    <input type="text" matInput formControlName="titulo">
+                    @if(formCadastro.controls.titulo.hasError('required')) {
+                        <mat-error>Título obrigatório</mat-error>
+                    }
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Data</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="dtEvento">
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    @if(formCadastro.controls.dtEvento.hasError('pattern') && !formCadastro.controls.dtEvento.hasError('required')) {
+                        <mat-error>Data do evento inválida</mat-error>
+                    }
+                    @if(formCadastro.controls.dtEvento.hasError('required')) {
+                        <mat-error>Data do evento obrigatória</mat-error>
+                    }
+                </mat-form-field>
+                <div class="conteiner-button">
+                    <button type="submit" [disabled]="!formCadastro.valid">Cadastrar</button>
+                </div>
+            </form>
+        </div>
+    }
+
+</div>

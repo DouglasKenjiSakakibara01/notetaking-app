@@ -20,7 +20,7 @@ export const routes: Routes = [
     },
     {
         path: 'evento',
-        loadComponent: () => import('./features/evento/evento').then(e => e.Evento)
+        loadComponent: () => import('./features/evento/pagina-evento').then(e => e.PaginaEvento)
     }
 
 ];
