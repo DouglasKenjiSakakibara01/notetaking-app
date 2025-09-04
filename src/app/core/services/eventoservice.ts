@@ -15,4 +15,8 @@ export class EventoService {
         return this.apiService.Post('Evento', evento);
     }
 
+    Delete(id :number): Observable<boolean> {
+        return this.apiService.Delete('Evento', id);
+    }
+
 }

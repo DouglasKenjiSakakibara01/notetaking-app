@@ -36,6 +36,13 @@ export class ApiService {
         .pipe();
     }
 
+    Delete<T>(endpoint: string, id: number) {
+        const url = `${this.baseUrl}/${endpoint}/${id}`;
+        
+        return this.http.delete<T>(url)
+        .pipe();
+    }
+
     private CriarParametrosRequisicao(params: any): HttpParams {
         let httpParams = new HttpParams();
         if (params) {

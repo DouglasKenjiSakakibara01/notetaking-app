@@ -1,26 +1,47 @@
 <div class="content">
     @if(!formEvento) {
-        <div class="container-button-cadastro">
-            <button (click)="AbrirModalFormulario()">Cadastrar</button>
-        </div>
-        <div class="container-lista">
-            <div class="header-lista">
-                <div class="titulo">Título</div>
-                <div class="data">Data</div>
+        @if(carregando) {
+            <div class="container-loading">
+                <mat-progress-spinner
+                mode="indeterminate"
+                diameter="40"
+                strokeWidth="4"
+                color="primary">
+                </mat-progress-spinner>
             </div>
-            <div class="lista">
-                @for(item of listaEvento; track item.Id) {
-                    <div class="item">
-                        <div class="titulo">
-                            {{item.Titulo}}
-                        </div>
-                        <div class="data">
-                            {{item.DtEvento}}
-                        </div>
-                    </div>
-                }
+        }
+        @else {
+            <div class="container-button-cadastro">
+                <button (click)="AbrirFormulario()">Cadastrar</button>
             </div>
-        </div>
+            <div class="container-lista">
+                <div class="header-lista">
+                    <div class="titulo">Título</div>
+                    <div class="descricao">Descrição</div>
+                    <div class="data">Data</div>
+                </div>
+                <div class="lista">
+                    @for(item of listaEvento; track item.Id) {
+                        <div class="item">
+                            <div class="titulo">
+                                {{item.Titulo}}
+                            </div>
+                            <div class="descricao">
+                                {{item.Descricao}}
+                            </div>
+                            <div class="data">
+                                {{item.DtEvento}}
+                            </div>
+                            <div class="opcoes">
+                                <mat-icon aria-hidden="false" aria-label="home icon" fontIcon="delete" (click)="ExcluirEvento(item.Id)"></mat-icon>
+                                <mat-icon  aria-hidden="false" aria-label="edit icon" fontIcon="edit" (click)="AbrirFormulario(item)"></mat-icon>
+                                <mat-icon aria-hidden="false" aria-label="search icon" fontIcon="search" (click)="AbrirFormulario(item, true)"></mat-icon>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
     }
 
     @if(formEvento) {
@@ -34,19 +55,32 @@
                     }
                 </mat-form-field>
                 <mat-form-field>
+                    <mat-label>Descrição</mat-label>
+                    <textarea
+                        maxlength="500"
+                        matInput
+                        formControlName="descricao"
+                        cdkTextareaAutosize
+                        cdkAutosizeMinRows="5"
+                        cdkAutosizeMaxRows="5">
+                    </textarea>
+                </mat-form-field>
+                <mat-form-field>
                     <mat-label>Data</mat-label>
-                    <input matInput [matDatepicker]="picker" formControlName="dtEvento">
+                    <input 
+                    matInput 
+                    [matDatepicker]="picker" 
+                    formControlName="dtEvento"
+                    placeholder="dd/mm/aaaa"
+                    maxlength="10">
                     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
-                    @if(formCadastro.controls.dtEvento.hasError('pattern') && !formCadastro.controls.dtEvento.hasError('required')) {
+                    <!-- @if(formCadastro.controls.dtEvento.hasError('pattern')) {
                         <mat-error>Data do evento inválida</mat-error>
-                    }
-                    @if(formCadastro.controls.dtEvento.hasError('required')) {
-                        <mat-error>Data do evento obrigatória</mat-error>
-                    }
+                    } -->
                 </mat-form-field>
                 <div class="conteiner-button">
-                    <button type="submit" [disabled]="!formCadastro.valid">Cadastrar</button>
+                    <button type="submit" [disabled]="!formCadastro.valid">{{editandoForm? 'Editar' : 'Cadastrar'}}</button>
                 </div>
             </form>
         </div>
