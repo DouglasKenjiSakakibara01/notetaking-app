@@ -30,7 +30,7 @@
                                 {{item.Descricao}}
                             </div>
                             <div class="data">
-                                {{item.DtEvento}}
+                                {{item.DtEvento | date: 'dd/MM/yyyy'}}
                             </div>
                             <div class="opcoes">
                                 <mat-icon aria-hidden="false" aria-label="home icon" fontIcon="delete" (click)="ExcluirEvento(item.Id)"></mat-icon>
@@ -45,45 +45,52 @@
     }
 
     @if(formEvento) {
-        <div class="conteiner-cadastro">
-            <form (ngSubmit)="Cadastrar()" [formGroup]="formCadastro">
-                <mat-form-field>
-                    <mat-label>Título</mat-label>
-                    <input type="text" matInput formControlName="titulo">
-                    @if(formCadastro.controls.titulo.hasError('required')) {
-                        <mat-error>Título obrigatório</mat-error>
-                    }
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Descrição</mat-label>
-                    <textarea
-                        maxlength="500"
-                        matInput
-                        formControlName="descricao"
-                        cdkTextareaAutosize
-                        cdkAutosizeMinRows="5"
-                        cdkAutosizeMaxRows="5">
-                    </textarea>
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Data</mat-label>
-                    <input 
-                    matInput 
-                    [matDatepicker]="picker" 
-                    formControlName="dtEvento"
-                    placeholder="dd/mm/aaaa"
-                    maxlength="10">
-                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                    <!-- @if(formCadastro.controls.dtEvento.hasError('pattern')) {
-                        <mat-error>Data do evento inválida</mat-error>
-                    } -->
-                </mat-form-field>
-                <div class="conteiner-button">
-                    <button type="submit" [disabled]="!formCadastro.valid">{{editandoForm? 'Editar' : 'Cadastrar'}}</button>
+        <div class="conteiner-button-voltar">
+            <button (click)="VoltarListaEvento()">
+                <div>
+                    <mat-icon aria-hidden="false" aria-label="arrow back icon" fontIcon="arrow_back"></mat-icon>
+                    <span>Voltar</span>
                 </div>
-            </form>
-        </div>
+            </button>
+        </div>            
+        <form (ngSubmit)="Cadastrar()" [formGroup]="formCadastro">
+            <mat-form-field>
+                <mat-label>Título</mat-label>
+                <input type="text" matInput formControlName="titulo" [disabled]="consultandoForm">
+                @if(formCadastro.controls.titulo.hasError('required')) {
+                    <mat-error>Título obrigatório</mat-error>
+                }
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Descrição</mat-label>
+                <textarea
+                    maxlength="500"
+                    matInput
+                    formControlName="descricao"
+                    cdkTextareaAutosize
+                    cdkAutosizeMinRows="5"
+                    cdkAutosizeMaxRows="5"
+                    [disabled]="consultandoForm">
+                </textarea>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Data</mat-label>
+                <input 
+                matInput 
+                [matDatepicker]="picker" 
+                formControlName="dtEvento"
+                placeholder="dd/mm/aaaa"
+                maxlength="10"
+                [disabled]="consultandoForm">
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <!-- @if(formCadastro.controls.dtEvento.hasError('pattern')) {
+                    <mat-error>Data do evento inválida</mat-error>
+                } -->
+            </mat-form-field>
+            <div class="conteiner-button">
+                <button type="submit" [disabled]="!formCadastro.valid || consultandoForm">{{editandoForm? 'Editar' : 'Cadastrar'}}</button>
+            </div>
+        </form>
     }
-
 </div>
