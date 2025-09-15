@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ApiService } from "./apiservice";
-import { Evento } from "../../shared/models/Evento";
+import { Evento } from "../models/Evento";
 import { Observable } from "rxjs";
 
 @Injectable()
