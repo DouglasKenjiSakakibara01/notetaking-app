@@ -16,10 +16,15 @@ export class Usuario {
         this.Id = id || 0;
         this.Nome = nome || '';
         this.Senha = senha || '';
-        this.Email = senha || '';
+        this.Email = email || '';
         this.Cpf = cpf || '';
         this.DtNascimento = dtnascimento || new Date();
 
     }
 
+}
+
+export interface UsuarioLogin {
+    Email: string;
+    Senha: string;
 }

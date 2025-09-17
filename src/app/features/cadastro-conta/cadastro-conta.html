@@ -2,9 +2,9 @@
     <form (ngSubmit)="Cadastrar()" [formGroup]="formCadastro">
          <mat-form-field>
             <mat-label>Nome</mat-label>
-            <input type="email" matInput formControlName="nome">
+            <input type="text" matInput formControlName="nome">
             @if(formCadastro.controls.nome.hasError('required')) {
-                <mat-error>Email obrigatório</mat-error>
+                <mat-error>Nome obrigatório</mat-error>
             }
         </mat-form-field>
         <mat-form-field>
@@ -19,7 +19,11 @@
         </mat-form-field>
         <mat-form-field>
             <mat-label>Data de nascimento</mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="dataNascimento">
+            <input matInput 
+            [matDatepicker]="picker" 
+            formControlName="dataNascimento"
+            placeholder="dd/mm/aaaa"
+            maxlength="10">
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
             @if(formCadastro.controls.dataNascimento.hasError('pattern') && !formCadastro.controls.dataNascimento.hasError('required')) {

@@ -22,7 +22,7 @@
             }
         </mat-form-field>
         <div class="conteiner-button">
-            <button type="submit" [disabled]="senha.valid && email.valid" >Login</button>
+            <button type="submit" [disabled]="!senha.valid || !email.valid" >Login</button>
         </div>
     </form>
     <p>Ainda não tem uma conta? <a routerLink="/cadastro-conta">Cadastre aqui</a>.</p>
