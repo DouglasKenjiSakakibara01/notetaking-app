@@ -4,7 +4,7 @@ import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
-import { UsuarioService } from '../../core/services/usuarioservice';
+import { UsuarioService } from '../../core/services/usuario.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +22,7 @@ export class Login {
   async Login() {
     const UsuarioLogin: UsuarioLogin = {
       Email: this.email.value ?? '',
-      Senha: this.senha.value? await this.usuarioService.GerarHashSenha(this.senha.value) : ''
+      Senha: this.senha.value ?? ''
     };
 
     this.usuarioService.GetUsuario(UsuarioLogin).subscribe({

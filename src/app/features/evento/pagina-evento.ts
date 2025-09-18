@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { EventoService } from '../../core/services/eventoservice';
+import { EventoService } from '../../core/services/evento.service';
 import { CommonModule, DatePipe } from '@angular/common';
 import { DateAdapter, MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';

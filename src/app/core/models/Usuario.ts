@@ -28,3 +28,8 @@ export interface UsuarioLogin {
     Email: string;
     Senha: string;
 }
+
+export interface UsuarioLoginResponse {
+    Email: string;
+    Token: string;
+}

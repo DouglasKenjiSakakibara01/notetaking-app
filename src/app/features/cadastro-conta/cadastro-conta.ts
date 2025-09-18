@@ -7,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { Router } from '@angular/router';
-import { UsuarioService } from '../../core/services/usuarioservice';
+import { UsuarioService } from '../../core/services/usuario.service';
 
 
 @Component({
@@ -39,7 +39,7 @@ export class CadastroConta {
     usuario.Email = formValue.email || "";
     usuario.Cpf = formValue.cpf || "";
     usuario.DtNascimento = formValue.dataNascimento? formValue.dataNascimento : new Date();
-    usuario.Senha = formValue.senha ? await this.usuarioService.GerarHashSenha(formValue.senha) : "";
+    usuario.Senha = formValue.senha ? formValue.senha : "";
 
     this.usuarioService.Insert(usuario).subscribe({
       next: (usuario) => {
