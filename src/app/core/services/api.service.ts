@@ -1,25 +1,26 @@
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, timeout } from "rxjs";
+import { Router } from "@angular/router";
+import { catchError, Observable, timeout } from "rxjs";
+import { AuthService } from "./auth.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class ApiService {
-    private baseUrl: string = 'http://localhost:5104/api';
+    private baseUrl: string = 'https://localhost:7213/api';
 
     private headers = new HttpHeaders()
-                        .set('Authorization', 'Bearer meu-token-jwt')
-                        .set('Content-Type', 'application/json')
-                        .set('X-API-Key', 'minha-chave-api');
+                        .set('Content-Type', 'application/json');
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient,
+    ) {}
+
 
     Get<T>(endpoint: string, params?: any): Observable<T> {
         const url = `${this.baseUrl}/${endpoint}`;
         const options = { 
-            params: this.CriarParametrosRequisicao(params),
-            headers: this.headers 
+            params: this.CriarParametrosRequisicao(params)
         };
 
         return this.http.get<T>(url, options)

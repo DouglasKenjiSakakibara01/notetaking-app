@@ -1,14 +1,14 @@
 import { Router } from "@angular/router";
-import { UsuarioService } from "../../core/services/usuario.service";
-import { UsuarioLogin, UsuarioLoginResponse } from "../../core/models/Usuario";
+import { UsuarioLogin, UsuarioLoginResponse } from "../models/Usuario";
 import { Injectable } from "@angular/core";
+import { ApiService } from "./api.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   constructor(
-    private usuarioService: UsuarioService,
+    private apiService: ApiService,
     private router: Router
   ) {}
 
@@ -16,7 +16,7 @@ export class AuthService {
     const usuarioLogin: UsuarioLogin = { Email: email, Senha: senha };
     
     return new Promise((resolve, reject) => {
-      this.usuarioService.GetUsuario(usuarioLogin).subscribe({
+      this.apiService.Post('Auth/login', usuarioLogin).subscribe({
         next: (usuario: any) => {
           if (usuario && usuario.Token) {
             this.setAuthData(usuario.Token, usuario.Email);
@@ -34,12 +34,12 @@ export class AuthService {
   }
 
   setAuthData(token: string, email: string): void {
-    localStorage.setItem('authToken', token);
+    localStorage.setItem('token', token);
     localStorage.setItem('userEmail', email);
   }
 
   getToken(): string | null {
-    return localStorage.getItem('authToken');
+    return localStorage.getItem('token');
   }
 
   isAuthenticated(): boolean {
@@ -57,7 +57,7 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem('authToken');
+    localStorage.removeItem('token');
     localStorage.removeItem('userEmail');
     this.router.navigate(['/login']);
   }

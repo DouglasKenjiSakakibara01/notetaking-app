@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
 import { UsuarioService } from '../../core/services/usuario.service';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ export class Login {
   email = new FormControl('', [Validators.required, Validators.email]);
   senha = new FormControl('', [Validators.required, Validators.minLength(8)]);
 
-  constructor(private usuarioService: UsuarioService) {}
+  constructor(private authService: AuthService) {}
 
   async Login() {
     const UsuarioLogin: UsuarioLogin = {
@@ -25,14 +26,7 @@ export class Login {
       Senha: this.senha.value ?? ''
     };
 
-    this.usuarioService.GetUsuario(UsuarioLogin).subscribe({
-      next: (usuario) => {
-        console.log('Login efetuado com sucesso', usuario);
-      },
-      error: (erro) => {
-        console.error('Erro ao efetuar login', erro);
-      }
-    });
+    this.authService.login(UsuarioLogin.Email, UsuarioLogin.Senha);
 
   }
 }

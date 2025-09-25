@@ -8,10 +8,6 @@ import bcrypt from 'bcryptjs';
 export class UsuarioService {
     constructor(private apiService: ApiService) {}
 
-    GetUsuario(usuarioLogin: UsuarioLogin): Observable<UsuarioLogin> {
-        return this.apiService.Post('Usuario/login', usuarioLogin);
-    }
-
     Insert(usuario: Usuario): Observable<Usuario> {
         return this.apiService.Post('Usuario', usuario);
     }
