@@ -1,48 +1,52 @@
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpInterceptorFn, HttpRequest } from "@angular/common/http";
+import { inject, Injectable } from "@angular/core";
 import { AuthService } from "./auth.service";
 import { Router } from "@angular/router";
 import { catchError, Observable, throwError } from "rxjs";
 
-@Injectable()
-export class AuthInterceptor implements HttpInterceptor {
+export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
 
-  constructor(
-    private authService: AuthService,
-    private router: Router
-  ) {}
+  const authReq = adicionarToken(req, authService);
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const authReq = this.adicionarToken(req);
-
-    return next.handle(authReq).pipe(
-      catchError((error: HttpErrorResponse) => {
-        // Trata erro 401 (Unauthorized)
-        if (error.status === 401) {
-          this.tratarErro401();
-        }
-        return throwError(() => error);
-      })
-    );
-  }
-
-  private adicionarToken(request: HttpRequest<any>): HttpRequest<any> {
-    const token = this.authService.getToken();
-    
-    if (token) {
-      return request.clone({
-        setHeaders: {
-          Authorization: `Bearer ${token}`
-        }
+  return next(authReq).pipe(
+    catchError((error: HttpErrorResponse) => {
+      console.log("Erro na requisição:", {
+        status: error.status,
+        statusText: error.statusText,
+        url: error.url
       });
-    }
-    
-    return request;
-  }
 
-  private tratarErro401(): void {
-    console.warn('Token inválido ou expirado. Redirecionando para login...');
-    this.authService.logout();
-    this.router.navigate(['/login']);
+      // Trata erro 401 (Unauthorized)
+      if (error.status === 401) {
+        tratarErro401(authService, router);
+      } else if (error.status === 0) {
+        console.error("Erro de CORS ou conexão:", error);
+      }
+
+      return throwError(() => error);
+    })
+  );
+};
+
+const adicionarToken = (request: any, authService: AuthService) => {
+  const token = authService.getToken();
+  
+  if (token) {
+    const cloned = request.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return cloned;
   }
-}
+  
+  return request;
+};
+
+const tratarErro401 = (authService: AuthService, router: Router): void => {
+  console.warn("Token inválido ou expirado. Redirecionando para login...");
+  authService.logout();
+  router.navigate(['/login']);
+};

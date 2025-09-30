@@ -36,9 +36,8 @@ export class PaginaEvento {
     ),
   })
 
-  constructor(private eventoService : EventoService){
-
-  }
+  constructor(private eventoService : EventoService)
+  {}
 
   ngOnInit() {
     this.CarregarLista();

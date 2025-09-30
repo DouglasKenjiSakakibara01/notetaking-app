@@ -44,7 +44,7 @@ export class CadastroConta {
     this.usuarioService.Insert(usuario).subscribe({
       next: (usuario) => {
         console.log('Usuário cadastrado com sucesso', usuario);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/login']);
       },
       error: (erro) => {
         console.error('Erro ao cadastrar usuário', erro);
