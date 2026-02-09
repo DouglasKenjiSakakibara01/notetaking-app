@@ -2,6 +2,7 @@ import { Router } from "@angular/router";
 import { UsuarioLogin, UsuarioLoginResponse } from "../models/Usuario";
 import { Injectable } from "@angular/core";
 import { ApiService } from "./api.service";
+import { catchError, map, Observable, of, tap } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -12,25 +13,21 @@ export class AuthService {
     private router: Router
   ) {}
 
-  login(email: string, senha: string): Promise<boolean> {
+  login(email: string, senha: string): Observable<boolean> {
     const usuarioLogin: UsuarioLogin = { Email: email, Senha: senha };
     
-    return new Promise((resolve, reject) => {
-      this.apiService.Post('Auth/login', usuarioLogin).subscribe({
-        next: (usuario: any) => {
-          if (usuario && usuario.Token) {
-            this.setAuthData(usuario.Token, usuario.Email);
-            resolve(true);
-          } else {
-            resolve(false);
-          }
-        },
-        error: (error) => {
-          console.error('Erro no login:', error);
-          resolve(false);
+   return this.apiService.Post('Auth/login', usuarioLogin).pipe(
+      tap((usuario: any) => {
+        if (usuario?.Token) {
+          this.setAuthData(usuario.Token, usuario.Email);
         }
-      });
-    });
+      }),
+      map((usuario: any) => !!usuario?.Token),
+      catchError(err => {
+        console.error('Erro no login:', err);
+        return of(false);
+      })
+    );
   }
 
   setAuthData(token: string, email: string): void {

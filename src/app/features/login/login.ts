@@ -22,20 +22,19 @@ export class Login {
               private router: Router
   ) {}
 
-  async Login() {
+  Login() {
     const UsuarioLogin: UsuarioLogin = {
       Email: this.email.value ?? '',
       Senha: this.senha.value ?? ''
     };
 
-    const ret = await this.authService.login(UsuarioLogin.Email, UsuarioLogin.Senha);
-
-    if (ret) {
-      this.router.navigate(['/home']);
-    }
-    else {
-      alert('Falha no login. Verifique suas credenciais.');
-    }
-
+    this.authService.login(UsuarioLogin.Email, UsuarioLogin.Senha).subscribe(ret => {
+      if (ret) {
+        this.router.navigate(['/home']);
+      }
+      else {
+        alert('Falha no login. Verifique suas credenciais.');
+      }
+    });
   }
 }
